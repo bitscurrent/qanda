@@ -1,0 +1,44 @@
+/* Donate.css */
+
+/* Container styles */
+.donateContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Horizontal container styles */
+.horizontalContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+/* QR code container styles */
+.qrCodeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* QR code image styles */
+.qrCodeImage {
+  width: 50%; /* Set the width of the QR code image to take half of the container */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 10px; /* Add some spacing between the QR code image and text */
+}
+
+/* QR code text styles */
+.qrCodeText {
+  margin-top: 10px; /* Add some spacing between the QR code image and text */
+}
+
+/* PayPal button styles */
+.paypalButton {
+  margin-top: 20px; /* Add some spacing between the QR code and the PayPal button */
+}
