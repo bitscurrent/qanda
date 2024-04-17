@@ -13,7 +13,7 @@ import  {signup, login, askquestion, askquestionview, rtebystudent, studentprofi
 const app = express()
 
 app.use(cors({
-  origin: ["*"],
+  origin: ["https://studyqanda.netlify.app"],
   credentials: true,
   methods: ["GET", "POST", "PUT"],
 }));
