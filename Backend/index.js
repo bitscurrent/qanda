@@ -48,7 +48,11 @@ app.post("/askedQuestionIdView", askquestionview)
 app.get("/asset/:id", getassetbyid);
 
 app.get("/", async (req, res) => {
-  res.send("Backend Working Fine.")
+  res.send("Backend for student is working fine...")
+})
+
+app.get("/testing", async (req, res) => {
+  res.send("testing...")
 })
 
 // API endpoint to save HTML content
