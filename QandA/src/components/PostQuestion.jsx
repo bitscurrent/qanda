@@ -11,7 +11,7 @@ const PostQuestion = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4500/submit",
+        "https://qanda-student-api.vercel.app/submit",
         formData
       );
       console.log("Server response:", response.data);

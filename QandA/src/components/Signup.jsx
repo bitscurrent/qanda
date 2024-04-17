@@ -13,7 +13,7 @@ const Signup = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:4500/auth/signup", {
+    Axios.post("https://qanda-student-api.vercel.app/auth/signup", {
       name,
       username,
       email,

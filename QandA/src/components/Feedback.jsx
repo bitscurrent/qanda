@@ -76,7 +76,7 @@ const Feedback = () => {
 
   const sendFeedback = async () => {
     try {
-      await axios.post("http://localhost:4500/feedback", {
+      await axios.post("https://qanda-student-api.vercel.app/feedback", {
         likes: likes,
         dislikes: dislikes,
         comment: comment,

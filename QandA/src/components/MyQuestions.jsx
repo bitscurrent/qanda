@@ -15,7 +15,9 @@ const MyQuestion = () => {
     // Fetch question and answer from your Express server
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4500/RTEContent");
+        const response = await axios.get(
+          "https://qanda-student-api.vercel.app/RTEContent"
+        );
         setQuestion(response.data.question);
         setAnswer(response.data.answer);
       } catch (error) {
@@ -31,7 +33,9 @@ const MyQuestion = () => {
     // Fetch answer from your Express server
     const fetchMyQuestion = async () => {
       try {
-        const response = await axios.get("http://localhost:4500/RTEContent");
+        const response = await axios.get(
+          "https://qanda-student-api.vercel.app/RTEContent"
+        );
 
         // Format the date
         const date = new Date(response.data.date);

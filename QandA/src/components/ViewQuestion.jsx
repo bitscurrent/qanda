@@ -26,7 +26,7 @@ const ViewQuestion = () => {
       setLoading(true);
 
       const response = await Axios.post(
-        "http://localhost:4500/askedQuestionIdView",
+        "https://qanda-student-api.vercel.app/askedQuestionIdView",
         { studentId: email } // Pass data as an object
       );
       const solvedQuestionIds = response.data;
@@ -34,7 +34,7 @@ const ViewQuestion = () => {
       console.log(solvedQuestionIds, "solvedQuestionIds inside vq");
       const detailsPromises = solvedQuestionIds.map(async (id) => {
         const assetResponse = await Axios.get(
-          `http://localhost:4500/asset/${id}`
+          `https://qanda-student-api.vercel.app/asset/${id}`
         );
         return assetResponse.data;
       });

@@ -14,9 +14,12 @@ const CreditDisplay = () => {
   const fetchUserCredit = async () => {
     try {
       // Fetch user data to get credit
-      const userData = await Axios.post("http://localhost:4500/studentCredit", {
-        studentId: email, // Send the email in the request body
-      });
+      const userData = await Axios.post(
+        "https://qanda-student-api.vercel.app/studentCredit",
+        {
+          studentId: email, // Send the email in the request body
+        }
+      );
       setUserCredit(userData.data.credit);
     } catch (error) {
       console.error("Error fetching user credit:", error);

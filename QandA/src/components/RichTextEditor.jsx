@@ -17,22 +17,24 @@ const RichTextEditor = () => {
   const handleSubmitClick = async () => {
     try {
       setSubmitting(true);
-      const response = await Axios.post(`http://localhost:4500/RTEContent`, {
-        question: value,
-        studentId: email,
-        askedBy: name,
-        askedOn: new Date(),
-      });
+      const response = await Axios.post(
+        `https://qanda-student-api.vercel.app/RTEContent`,
+        {
+          question: value,
+          studentId: email,
+          askedBy: name,
+          askedOn: new Date(),
+        }
+      );
 
       const questionId = response.data._id;
 
-      await Axios.post("http://localhost:4500/askedQuestionId", {
+      await Axios.post("https://qanda-student-api.vercel.app/askedQuestionId", {
         questionId: questionId,
         askedQuestionsId: questionId,
         studentId: email,
       });
 
-      console.log("Expert content saved successfully:", response.data);
       alert("Your question is submitted successfully");
 
       navigate("/home"); // Redirect to home after successful submission

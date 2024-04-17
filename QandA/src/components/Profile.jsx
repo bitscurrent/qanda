@@ -13,7 +13,7 @@ const Profile = () => {
       try {
         setLoading(true);
         const response = await Axios.post(
-          "http://localhost:4500/studentProfile",
+          "https://qanda-student-api.vercel.app/studentProfile",
           { studentId: email } // Send email in the request body
         );
         setStudentData(response.data);

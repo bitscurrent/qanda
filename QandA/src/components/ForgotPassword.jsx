@@ -8,7 +8,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:4500/auth/forgotPassword", {
+    Axios.post("https://qanda-student-api.vercel.app/auth/forgotPassword", {
       email,
     })
       .then((response) => {

@@ -9,9 +9,12 @@ const ResetPassword = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    Axios.post("http://localhost:4500/auth/resetPassword/" + token, {
-      password,
-    })
+    Axios.post(
+      "https://qanda-student-api.vercel.app/auth/resetPassword/" + token,
+      {
+        password,
+      }
+    )
       .then((response) => {
         if (response.data.status) {
           alert("Check your email for resetting password link");

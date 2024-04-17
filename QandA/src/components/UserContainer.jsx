@@ -7,7 +7,7 @@ const UserContainer = () => {
   Axios.defaults.withCredentials = true;
 
   const handleLogout = () => {
-    Axios.get("http://localhost:4500/auth/logout")
+    Axios.get("https://qanda-student-api.vercel.app/auth/logout")
       .then((res) => {
         if (res.data.status) {
           navigate("/login");

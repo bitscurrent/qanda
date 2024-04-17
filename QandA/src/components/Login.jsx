@@ -13,10 +13,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:4500/auth/login", {
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        "https://qanda-student-api.vercel.app/auth/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
       console.log("Login response:", response.data);
       if (response.data.success == true) {
         console.log("Login successful, redirecting to dashboard");

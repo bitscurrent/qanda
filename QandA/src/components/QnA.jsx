@@ -23,7 +23,9 @@ const QnA = () => {
     // Fetch answer from your Express server
     const fetchAnswer = async () => {
       try {
-        const response = await axios.get("http://localhost:4500/RTEContent");
+        const response = await axios.get(
+          "https://qanda-student-api.vercel.app/RTEContent"
+        );
 
         setAnswer(response.data.answer);
       } catch (error) {
