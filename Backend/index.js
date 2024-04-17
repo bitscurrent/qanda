@@ -13,7 +13,7 @@ import  {signup, login, askquestion, askquestionview, rtebystudent, studentprofi
 const app = express()
 
 app.use(cors({
-  origin: ["https://qanda-student-api.vercel.app"],
+  origin: ["*"],
   credentials: true,
   methods: ["GET", "POST", "PUT"],
 }));
