@@ -26,6 +26,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5400;
 const mongoURI = process.env.MONGODB_URI;
+const EMAIL = process.env.EMAIL;
 
 mongoose
   .connect(mongoURI,{
@@ -35,6 +36,139 @@ mongoose
   .then(() => console.log("Database Connected"))
   .catch((e) => console.log(e));
 
+  // Route for sending OTP
+  app.post("/auth/send-otp", async (req, res) => {
+    try {
+      const { email } = req.body;
+      const otp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+  
+    // console.log(otpStorage["dilipboidya.office@gmail.com"], "Stored OTP");
+  
+    // Log the OTP and email for debugging
+    console.log("Generated OTP:", otp, "for email:", email);
+
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: EMAIL, // Your Gmail address
+          pass: password, // Your Gmail password or app-specific password
+        },
+      });
+  
+      const mailOptions = {
+        from: EMAIL,
+        to: email,
+        subject: "OTP Verification",
+        text: `Your OTP for signup: ${otp}`,
+      };
+  
+      await transporter.sendMail(mailOptions);
+  
+      res.json({ status: "success", otp });
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      res.status(500).json({ status: "error", message: "Failed to send OTP" });
+    }
+  });
+  
+// Route for verifying OTP
+app.post("/auth/verify-otp", (req, res) => {
+  const { email, otp } = req.body;
+  console.log("Received OTP:", otp, "for email:", email);
+
+  try {
+    // Check if OTP exists in storage
+    const storedOtp = otpStorage[email];
+    console.log("Stored OTP:", storedOtp);
+
+    if (!storedOtp) {
+      return res.status(404).json({ error: "OTP not found or expired" });
+    }
+
+    // Verify OTP
+    if (storedOtp == otp) {
+      // If OTP is valid, remove it from storage (for one-time use)
+      delete otpStorage[email];
+      res.status(200).json({ message: "OTP verified successfully" });
+    } else {
+      res.status(400).json({ error: "Invalid OTP" });
+    }
+  } catch (error) {
+    console.error("OTP verification error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Route for resetting password
+app.post("/auth/reset-password", async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  try {
+    // Find the student by email
+    const student = await Student.findOne({ email });
+
+    if (!student) {
+      return res.status(404).json({ error: "Student not found" });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the password
+    student.password = hashedPassword;
+    await student.save();
+
+    res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Reset password error:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Temporary storage for OTPs
+let otpStorage = {}; // Ensure otpStorage is initialized at the top level
+
+app.post("/auth/forgot-password", async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    // Generate random OTP
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit OTP
+
+     // Store the OTP in temporary storage
+     otpStorage[email] = otp;
+     // console.log("Stored OTP:", otpStorage[email]); // Log stored OTP
+
+    // Create Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: EMAIL, // Your Gmail address
+        pass: password, // Your Gmail password or app-specific password
+      },
+    });
+
+    // Define email options
+    const mailOptions = {
+      from: EMAIL,
+      to: email, // Email address to send OTP
+      subject: "Forgot Password OTP",
+      text: `Your OTP for password reset: ${otp}`,
+    };
+
+    // Send email
+    await transporter.sendMail(mailOptions);
+
+    // Update MongoDB Student model with new password
+    await Student.findOneAndUpdate({ email }, { password: newPassword });
+
+    // Send response
+    res.json({ status: "success", otp });
+  } catch (error) {
+    console.error("Error sending OTP:", error);
+    res.status(500).json({ status: "error", message: "Failed to send OTP" });
+  }
+});
 // Handle sign-up request
 app.post('/auth/signup', signup)
 // Handle login request
