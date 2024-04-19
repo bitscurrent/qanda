@@ -70,13 +70,6 @@ function App() {
             path="/resetPassword/:token"
             element={<ResetPassword />}
           ></Route>
-          {/* <Route path="/dashboard" element={<Dashboard />}></Route> */}
-          {/* <Route path="/richtexteditor" element={<RichTextEditor />}></Route> */}
-        </Routes>
-      </BrowserRouter>
-
-      <BrowserRouter>
-        <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<LandingPage />}></Route>
@@ -88,6 +81,8 @@ function App() {
             path="/viewQuestion"
             element={<Protected Component={ViewQuestion} />}
           ></Route>
+          {/* <Route path="/dashboard" element={<Dashboard />}></Route> */}
+          {/* <Route path="/richtexteditor" element={<RichTextEditor />}></Route> */}
         </Routes>
       </BrowserRouter>
     </>

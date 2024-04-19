@@ -31,7 +31,7 @@ const ViewQuestion = () => {
       );
       const solvedQuestionIds = response.data;
 
-      console.log(solvedQuestionIds, "solvedQuestionIds inside vq");
+      //console.log(solvedQuestionIds, "solvedQuestionIds inside vq");
       const detailsPromises = solvedQuestionIds.map(async (id) => {
         const assetResponse = await Axios.get(
           `https://qanda-student-api.vercel.app/asset/${id}`
@@ -87,8 +87,7 @@ const ViewQuestion = () => {
                     className={css.questionContent}
                     onClick={() => handleQuestionClick(question)}
                   >
-                    {console.log(question)}
-
+                    //{console.log(question)}
                     <span className={css.serialNumber}>
                       {indexOfFirstQuestion + index + 1}
                     </span>
