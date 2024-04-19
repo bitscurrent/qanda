@@ -15,7 +15,7 @@ const app = express()
 app.use(cors({
   origin: ["https://studyqanda.netlify.app"],
   credentials: true,
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST","PUT"],
 }));
 
 app.use(cookieParser())
