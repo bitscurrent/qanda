@@ -8,21 +8,21 @@
 }
 
 .heading {
-  text-align: center;
   font-size: 24px;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
 .subheading {
-  text-align: center;
   font-size: 18px;
+  font-weight: bold;
   margin-bottom: 20px;
 }
 
 .inputField {
   width: 100%;
-  padding: 10px;
   margin-bottom: 15px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -30,19 +30,40 @@
 .loginButton {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
-  color: #fff;
   border: none;
   border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  background-color: #0056b3;
+}
+
+.forgotPasswordText {
+  color: #007bff;
+  font-size: 14px;
+  text-decoration: underline;
   cursor: pointer;
 }
 
 .error {
   color: red;
-  text-align: center;
   margin-top: 10px;
 }
 
 .signupText {
-  text-align: center;
+  font-size: 14px;
+  margin-top: 20px;
+}
+
+.signupText a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signupText a:hover {
+  text-decoration: underline;
 }
