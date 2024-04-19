@@ -28,6 +28,7 @@ dotenv.config();
 const PORT = process.env.PORT || 5400;
 const mongoURI = process.env.MONGODB_URI;
 const EMAIL = process.env.EMAIL;
+const password=process.env.PASSWORD
 
 mongoose
   .connect(mongoURI,{
