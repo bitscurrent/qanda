@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser"
 import bodyParser from "body-parser";
 import  {signup, login, askquestion, askquestionview, rtebystudent, studentprofile, studentcredit,getrtebystudent,getassetbyid}  from "./routes/user.js";
 // import { UserRouter } from "./routes/user.js";
+import nodemailer from "nodemailer";
 
 const app = express()
 
