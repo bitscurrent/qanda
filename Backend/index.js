@@ -1,78 +1,90 @@
 import express from "express";
 import mongoose from "mongoose";
-import bcrypt from "bcrypt"
-import { Asset } from "./models/Assets.js"
+import bcrypt from "bcrypt";
+import { Asset } from "./models/Assets.js";
 import { Student } from "./models/Students.js";
 import cors from "cors";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
-import  {signup, login, askquestion, askquestionview, rtebystudent, studentprofile, studentcredit,getrtebystudent,getassetbyid}  from "./routes/user.js";
+import {
+  signup,
+  login,
+  askquestion,
+  askquestionview,
+  rtebystudent,
+  studentprofile,
+  studentcredit,
+  getrtebystudent,
+  getassetbyid,
+} from "./routes/user.js";
 // import { UserRouter } from "./routes/user.js";
 import nodemailer from "nodemailer";
 
-const app = express()
+const app = express();
 
-app.use(cors({
-  origin: ["https://studyqanda.netlify.app"],
-  credentials: true,
-  methods: ["GET", "POST","PUT"],
-}));
+app.use(
+  cors({
+    origin: ["https://studyqanda.netlify.app"],
+    credentials: true,
+    methods: ["GET", "POST"],
+  })
+);
 
-app.use(cookieParser())
+app.use(cookieParser());
 // app.use('/auth', UserRouter)
 app.use(bodyParser.json());
 app.use(express.json());
 dotenv.config();
 
 const PORT = process.env.PORT || 5400;
+const password = process.env.PASSWORD;
 const mongoURI = process.env.MONGODB_URI;
 const EMAIL = process.env.EMAIL;
-const password=process.env.PASSWORD
 
 mongoose
-  .connect(mongoURI,{
+  .connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("Database Connected"))
   .catch((e) => console.log(e));
 
-  // Route for sending OTP
-  app.post("/auth/send-otp", async (req, res) => {
-    try {
-      const { email } = req.body;
-      const otp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
-  
+// Route for sending OTP
+app.post("/auth/send-otp", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000); // Generate a 6-digit OTP
+
     // console.log(otpStorage["dilipboidya.office@gmail.com"], "Stored OTP");
-  
+
     // Log the OTP and email for debugging
     console.log("Generated OTP:", otp, "for email:", email);
 
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: EMAIL, // Your Gmail address
-          pass: password, // Your Gmail password or app-specific password
-        },
-      });
-  
-      const mailOptions = {
-        from: EMAIL,
-        to: email,
-        subject: "OTP Verification",
-        text: `Your OTP for signup: ${otp}`,
-      };
-  
-      await transporter.sendMail(mailOptions);
-  
-      res.json({ status: "success", otp });
-    } catch (error) {
-      console.error("Error sending OTP:", error);
-      res.status(500).json({ status: "error", message: "Failed to send OTP" });
-    }
-  });
-  
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: EMAIL, // Your Gmail address
+        pass: password, // Your Gmail password or app-specific password
+      },
+    });
+
+    const mailOptions = {
+      from: EMAIL,
+      to: email,
+      subject: "OTP Verification",
+      text: `Your OTP for signup: ${otp}`,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.json({ status: "success", otp });
+  } catch (error) {
+    console.error("Error sending OTP:", error);
+    res.status(500).json({ status: "error", message: "Failed to send OTP" });
+  }
+});
+
 // Route for verifying OTP
 app.post("/auth/verify-otp", (req, res) => {
   const { email, otp } = req.body;
@@ -137,9 +149,9 @@ app.post("/auth/forgot-password", async (req, res) => {
     // Generate random OTP
     const otp = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit OTP
 
-     // Store the OTP in temporary storage
-     otpStorage[email] = otp;
-     // console.log("Stored OTP:", otpStorage[email]); // Log stored OTP
+    // Store the OTP in temporary storage
+    otpStorage[email] = otp;
+    console.log("Stored OTP:", otpStorage[email]); // Log stored OTP
 
     // Create Nodemailer transporter
     const transporter = nodemailer.createTransport({
@@ -171,36 +183,37 @@ app.post("/auth/forgot-password", async (req, res) => {
     res.status(500).json({ status: "error", message: "Failed to send OTP" });
   }
 });
-// Handle sign-up request
-app.post('/auth/signup', signup)
-// Handle login request
-app.post('/auth/login',login)
-  
-app.post("/askedQuestionId",askquestion)
 
-app.post("/askedQuestionIdView", askquestionview)
+// Handle sign-up request
+app.post("/auth/signup", signup);
+// Handle login request
+app.post("/auth/login", login);
+
+app.post("/askedQuestionId", askquestion);
+
+app.post("/askedQuestionIdView", askquestionview);
 
 // Route to fetch question and answer data by ID
 app.get("/asset/:id", getassetbyid);
 
 app.get("/", async (req, res) => {
-  res.send("Backend for student is working fine...")
-})
+  res.send("Backend for student is working fine...");
+});
 
 app.get("/testing", async (req, res) => {
-  res.send("testing...")
-})
+  res.send("testing...");
+});
 
 // API endpoint to save HTML content
-app.post("/RTEContent", rtebystudent)
+app.post("/RTEContent", rtebystudent);
 // GET endpoint to retrieve all HTML content
 app.get("/RTEContent", getrtebystudent);
 
-app.post("/studentCredit", studentcredit)
+app.post("/studentCredit", studentcredit);
 
-app.post("/studentProfile", studentprofile)
+app.post("/studentProfile", studentprofile);
 
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
-})
+});
