@@ -88,12 +88,12 @@ app.post("/auth/send-otp", async (req, res) => {
 // Route for verifying OTP
 app.post("/auth/verify-otp", (req, res) => {
   const { email, otp } = req.body;
-  console.log("Received OTP:", otp, "for email:", email);
+  //console.log("Received OTP:", otp, "for email:", email);
 
   try {
     // Check if OTP exists in storage
     const storedOtp = otpStorage[email];
-    console.log("Stored OTP:", storedOtp);
+    //console.log("Stored OTP:", storedOtp);
 
     if (!storedOtp) {
       return res.status(404).json({ error: "OTP not found or expired" });
