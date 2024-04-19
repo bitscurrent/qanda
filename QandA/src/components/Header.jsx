@@ -17,14 +17,14 @@ const Header = () => {
             <NavLink
               to="/home"
               style={{ textDecoration: "none" }}
-              activeClassName={css.active}
+              activeclassname={css.active}
             >
               QandA
             </NavLink>
           </div>
 
           <div className={`${css.bellIconDiv} ${css.askquestion}`}>
-            <NavLink to="/usercontainer" activeClassName={css.active}>
+            <NavLink to="/usercontainer" activeclassname={css.active}>
               <i className={"fas fa-cog " + css.userIcon}></i>
             </NavLink>
           </div>
@@ -36,7 +36,7 @@ const Header = () => {
           <NavLink
             className={css.askquestion}
             to="/postquestion"
-            activeClassName={css.active}
+            activeclassname={css.active}
           >
             + Ask Question
           </NavLink>
@@ -44,7 +44,7 @@ const Header = () => {
           <NavLink
             className={css.viewQuestion}
             to="/viewQuestion"
-            activeClassName={css.active}
+            activeclassname={css.active}
           >
             My Questions
           </NavLink>
@@ -54,7 +54,7 @@ const Header = () => {
           <NavLink
             className={css.viewQuestion}
             to="/donate"
-            activeClassName={css.active}
+            activeclassname={css.active}
           >
             Donate Us
           </NavLink>
