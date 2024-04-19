@@ -20,7 +20,7 @@ const ViewQuestion = () => {
     fetchData();
   }, [currentPage]); // Fetch data whenever currentPage changes
   const email = localStorage.getItem("qandaStudentEmail");
-  console.log(email, "emaillllllllll");
+
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -87,7 +87,6 @@ const ViewQuestion = () => {
                     className={css.questionContent}
                     onClick={() => handleQuestionClick(question)}
                   >
-                    //{console.log(question)}
                     <span className={css.serialNumber}>
                       {indexOfFirstQuestion + index + 1}
                     </span>

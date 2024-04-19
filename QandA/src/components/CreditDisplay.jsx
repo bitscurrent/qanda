@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Axios from "axios";
 import css from "./CreditDisplay.module.css"; // Import CSS for styling
 
@@ -28,7 +29,19 @@ const CreditDisplay = () => {
 
   return (
     <div className={css.creditContainer}>
-      <span className={css.creditText}>Credit: {userCredit}</span>
+      <span className={css.creditText}></span>
+      <br />
+      {userCredit === 0 ? (
+        <span style={{ color: "red", fontSize: "15px" }}>
+          <Link to={"/payment"} style={{ color: "red", fontSize: "15px" }}>
+            Insufficient Credit
+          </Link>
+        </span>
+      ) : (
+        <span style={{ color: "green", fontSize: "16.5px" }}>
+          Credit: {userCredit}
+        </span>
+      )}
     </div>
   );
 };
