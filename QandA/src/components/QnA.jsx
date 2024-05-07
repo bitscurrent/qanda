@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import * as URL from "../hostdetails";
 
 const QnA = () => {
   const [question, setQuestion] = useState("");
@@ -8,7 +9,7 @@ const QnA = () => {
     // Fetch question from your Express server
     const fetchQuestion = async () => {
       try {
-        const response = await axios.get("http://localhost:4500/RTEContent");
+        const response = await axios.get(`${URL.USER_URL}RTEContent`);
         setQuestion(response.data.question);
       } catch (error) {
         console.error("Error fetching question:", error);
@@ -23,9 +24,7 @@ const QnA = () => {
     // Fetch answer from your Express server
     const fetchAnswer = async () => {
       try {
-        const response = await axios.get(
-          "https://qanda-student-api.vercel.app/RTEContent"
-        );
+        const response = await axios.get(`${URL.USER_URL}RTEContent`);
 
         setAnswer(response.data.answer);
       } catch (error) {

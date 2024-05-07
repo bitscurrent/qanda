@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import css from "./ViewQuestion.module.css";
 import Qanda from "./Qanda";
+import * as URL from "../hostdetails";
 
 const stripHtmlTags = (html) => {
   const tempElement = document.createElement("div");
@@ -26,16 +27,14 @@ const ViewQuestion = () => {
       setLoading(true);
 
       const response = await Axios.post(
-        "https://qanda-student-api.vercel.app/askedQuestionIdView",
+        `${URL.USER_URL}askedQuestionIdView`,
         { studentId: email } // Pass data as an object
       );
       const solvedQuestionIds = response.data;
 
       //console.log(solvedQuestionIds, "solvedQuestionIds inside vq");
       const detailsPromises = solvedQuestionIds.map(async (id) => {
-        const assetResponse = await Axios.get(
-          `https://qanda-student-api.vercel.app/asset/${id}`
-        );
+        const assetResponse = await Axios.get(`${URL.USER_URL}asset/${id}`);
         return assetResponse.data;
       });
 

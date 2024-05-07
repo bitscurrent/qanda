@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "@fortawesome/fontawesome-free/css/all.css";
 import css from "./Feedback.module.css";
 import axios from "axios";
+import * as URL from "../hostdetails";
 
 const Feedback = () => {
   const [likes, setLikes] = useState(0);
@@ -76,7 +77,7 @@ const Feedback = () => {
 
   const sendFeedback = async () => {
     try {
-      await axios.post("https://qanda-student-api.vercel.app/feedback", {
+      await axios.post(`${URL.USER_URL}feedback`, {
         likes: likes,
         dislikes: dislikes,
         comment: comment,

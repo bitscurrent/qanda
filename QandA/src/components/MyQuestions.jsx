@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import css from "./MyQuestions.module.css";
 import { Link, useNavigate } from "react-router-dom";
+import * as URL from "../hostdetails";
 
 const MyQuestion = () => {
   const [question, setQuestion] = useState("");
@@ -15,9 +16,7 @@ const MyQuestion = () => {
     // Fetch question and answer from your Express server
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://qanda-student-api.vercel.app/RTEContent"
-        );
+        const response = await axios.get(`${URL.USER_URL}RTEContent`);
         setQuestion(response.data.question);
         setAnswer(response.data.answer);
       } catch (error) {
@@ -33,9 +32,7 @@ const MyQuestion = () => {
     // Fetch answer from your Express server
     const fetchMyQuestion = async () => {
       try {
-        const response = await axios.get(
-          "https://qanda-student-api.vercel.app/RTEContent"
-        );
+        const response = await axios.get(`${URL.USER_URL}RTEContent`);
 
         // Format the date
         const date = new Date(response.data.date);

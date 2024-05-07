@@ -1,0 +1,27 @@
+.container {
+    padding: 20px;
+  }
+  
+  .socialIcons {
+    list-style: none; /* Remove bullets */
+    padding: 0;
+    display: flex; /* Display items horizontally */
+  }
+  
+  .socialIcons li {
+    margin-right: 10px; /* Add spacing between icons */
+  }
+  
+  .socialLink {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .socialLink:hover {
+    color: #007bff; /* Change color on hover */
+  }
+  
+  .icon {
+    margin-right: 5px; /* Add spacing between icon and text */
+  }
+  

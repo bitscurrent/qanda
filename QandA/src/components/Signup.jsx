@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import css from "./Signup.module.css"; // Import CSS module
 import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import * as URL from "../hostdetails";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -11,21 +12,20 @@ const Signup = () => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // To prevent multiple form submissions
 
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsSubmitting(true); // Disable form submission
+
     try {
       if (!isOtpSent) {
         // Generate and send OTP
-        const otpResponse = await Axios.post(
-          "https://qanda-student-api.vercel.app/auth/send-otp",
-
-          {
-            email,
-          }
-        );
+        const otpResponse = await Axios.post(`${URL.USER_URL}auth/send-otp`, {
+          email,
+        });
         if (otpResponse.data.status === "success") {
           setIsOtpSent(true);
           setError("");
@@ -34,16 +34,13 @@ const Signup = () => {
         }
       } else {
         // Verify OTP
-        const response = await Axios.post(
-          "https://qanda-student-api.vercel.app/auth/signup",
-          {
-            name,
-            username,
-            email,
-            password,
-            otp,
-          }
-        );
+        const response = await Axios.post(`${URL.USER_URL}auth/signup`, {
+          name,
+          username,
+          email,
+          password,
+          otp,
+        });
         if (response.data.status) {
           navigate("/login");
         } else {
@@ -52,71 +49,80 @@ const Signup = () => {
       }
     } catch (error) {
       setError("An error occurred. Please try again later.");
+    } finally {
+      setIsSubmitting(false); // Re-enable form submission
     }
   };
 
   return (
-    <>
-      <div className={css.signupContainer}>
-        <form className={css.signupForm} onSubmit={handleSubmit}>
-          <h2>Sign Up</h2>
+    <div className={css.signupContainer}>
+      <form className={css.signupForm} onSubmit={handleSubmit}>
+        <h2>Sign Up</h2>
 
-          <label htmlFor="name">Full Name:</label>
-          <input
-            type="text"
-            placeholder="Full Name"
-            onChange={(event) => setName(event.target.value)}
-            required
-          />
+        <label htmlFor="name">Full Name:</label>
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+          required
+        />
 
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            placeholder="Username"
-            onChange={(event) => setUsername(event.target.value)}
-            required
-          />
+        <label htmlFor="username">Username:</label>
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+          required
+        />
 
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            placeholder="Email"
-            onChange={(event) => setEmail(event.target.value)}
-            required
-          />
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          required
+        />
 
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            placeholder="Password"
-            onChange={(event) => setPassword(event.target.value)}
-            required
-            pattern=".{6,}"
-            title="Password must be at least 6 characters long"
-          />
+        <label htmlFor="password">Password:</label>
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          required
+          minLength={6}
+          title="Password must be at least 6 characters long"
+        />
 
-          {!isOtpSent && <button type="submit">Send OTP</button>}
+        {!isOtpSent ? (
+          <button type="submit" disabled={isSubmitting}>
+            Send OTP
+          </button>
+        ) : (
+          <>
+            <label htmlFor="otp">OTP:</label>
+            <input
+              type="text"
+              placeholder="OTP"
+              value={otp}
+              onChange={(event) => setOtp(event.target.value)}
+            />
+            <button type="submit" disabled={isSubmitting}>
+              Verify OTP
+            </button>
+          </>
+        )}
 
-          {isOtpSent && (
-            <>
-              <label htmlFor="otp">OTP:</label>
-              <input
-                type="text"
-                placeholder="OTP"
-                onChange={(event) => setOtp(event.target.value)}
-              />
-              <button type="submit">Verify OTP</button>
-            </>
-          )}
+        {error && <p className={css.error}>{error}</p>}
 
-          {error && <p className={css.error}>{error}</p>}
-
-          <p>
-            Have an account? <Link to="/login">Login</Link>{" "}
-          </p>
-        </form>
-      </div>
-    </>
+        <p>
+          Have an account? <Link to="/login">Login</Link>{" "}
+        </p>
+      </form>
+    </div>
   );
 };
 

@@ -1,13 +1,14 @@
 import React from "react";
 import Axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import * as URL from "../hostdetails";
 
 const UserContainer = () => {
   const navigate = useNavigate(); // Move useNavigate inside the functional component
   Axios.defaults.withCredentials = true;
 
   const handleLogout = () => {
-    Axios.get("https://qanda-student-api.vercel.app/auth/logout")
+    Axios.get(`${URL.USER_URL}auth/logout`)
       .then((res) => {
         if (res.data.status) {
           navigate("/login");
@@ -40,7 +41,12 @@ const UserContainer = () => {
         <Link to="/tnc"> Terms and Conditions</Link>
         <br />
       </h3>
-      <br />
+
+      <h3>
+        <Link to="/aboutus"> About Us</Link>
+        <br />
+      </h3>
+
       <button onClick={handleLogout}>Logout</button>
     </>
   );

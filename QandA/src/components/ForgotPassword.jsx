@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+import * as URL from "../hostdetails";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -8,7 +9,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    Axios.post("https://qanda-student-api.vercel.app/auth/forgotPassword", {
+    Axios.post(`${URL.USER_URL}auth/forgotPassword`, {
       email,
     })
       .then((response) => {

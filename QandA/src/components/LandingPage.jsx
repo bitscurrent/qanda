@@ -4,6 +4,8 @@ import Logout from "./Logout";
 import styles from "./LandingPage.module.css"; // Import CSS module
 import DonateUs from "./Donate";
 import Qanda from "./Qanda";
+import AboutUs from "./AboutUs";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 const LandingPage = () => {
   // Retrieve user name from local storage
@@ -37,41 +39,17 @@ const LandingPage = () => {
             cursor: "pointer", // Change cursor to pointer on hover
           }}
         >
+          <span>
+            <i className="fa-regular fa-circle-question" />
+          </span>
+          <br />
           Ask your doubt and get answers, our skilled SMEs are waiting to help
           you out.
+          <hr />
+          <button style={{ width: "10%", background: "black" }}>ASK</button>
         </div>
       </Link>{" "}
-      <div
-        style={{
-          marginTop: "90px",
-          color: "blue",
-          background: "lightgoldenrodyellow", // Adjusted color here
-          textAlign: "center", // Center text horizontally
-          padding: "10px",
-          fontSize: "17px",
-        }}
-      >
-        If you've found our platform helpful and would like to support our
-        ongoing efforts, please consider making a donation. Your contributions
-        help us maintain and improve our services, ensuring that we can continue
-        to provide valuable assistance to students like you.
-      </div>
-      <br />
-      <span>
-        <Link to={"/donate"} style={{ textDecoration: "none" }}>
-          <button
-            style={{
-              width: "25%",
-              textAlign: "center",
-              cursor: "pointer",
-              display: "block",
-              margin: "0 auto",
-            }}
-          >
-            Donate Us
-          </button>
-        </Link>
-      </span>
+      <AboutUs />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import CreditDisplay from "./CreditDisplay";
+import * as URL from "../hostdetails";
 
 const Profile = () => {
   const [studentData, setStudentData] = useState(null);
@@ -13,7 +14,7 @@ const Profile = () => {
       try {
         setLoading(true);
         const response = await Axios.post(
-          "https://qanda-student-api.vercel.app/studentProfile",
+          `${URL.USER_URL}studentProfile`,
           { studentId: email } // Send email in the request body
         );
         setStudentData(response.data);

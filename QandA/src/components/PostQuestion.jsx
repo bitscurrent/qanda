@@ -3,6 +3,8 @@ import axios from "axios";
 import css from "./PostQuestion.module.css";
 import RichTextEditor from "./RichTextEditor";
 import { Link, useNavigate } from "react-router-dom";
+import * as URL from "../hostdetails";
+
 const PostQuestion = () => {
   const [showTextarea, setShowTextarea] = useState(false);
 
@@ -10,10 +12,7 @@ const PostQuestion = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post(
-        "https://qanda-student-api.vercel.app/submit",
-        formData
-      );
+      const response = await axios.post(`${URL.USER_URL}submit`, formData);
       console.log("Server response:", response.data);
       // Handle success, reset form, show success message, etc.
     } catch (error) {

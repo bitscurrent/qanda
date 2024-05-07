@@ -16,14 +16,14 @@ import Profile from "./components/Profile";
 import MyQuestion from "./components/MyQuestions";
 import Payment from "./components/Payment";
 import ForgotPassword from "./components/ForgotPassword";
-import ResetPassword from "./components/ResetPassword";
-import Dashboard from "./components/Dashboard";
+
 import ViewQuestion from "./components/ViewQuestion";
 import StudentDashboard from "./components/StudentDashboard";
 import LandingPage from "./components/LandingPage";
 import TermsandConditions from "./components/TnC";
 import DonateUs from "./components/Donate";
 import Protected from "./components/Protected";
+import AboutUs from "./components/AboutUs";
 
 function App() {
   return (
@@ -66,10 +66,6 @@ function App() {
           ></Route>
           <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
           <Route path="/donate" element={<DonateUs />}></Route>
-          <Route
-            path="/resetPassword/:token"
-            element={<ResetPassword />}
-          ></Route>
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/" element={<LandingPage />}></Route>
@@ -81,6 +77,9 @@ function App() {
             path="/viewQuestion"
             element={<Protected Component={ViewQuestion} />}
           ></Route>
+          <Route path="/aboutus" element={<AboutUs />}>
+            {" "}
+          </Route>
           {/* <Route path="/dashboard" element={<Dashboard />}></Route> */}
           {/* <Route path="/richtexteditor" element={<RichTextEditor />}></Route> */}
         </Routes>

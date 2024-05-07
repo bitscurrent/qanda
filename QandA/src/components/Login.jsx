@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./Login.module.css";
 import Qanda from "./Qanda";
+import * as URL from "../hostdetails";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,13 +21,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://qanda-student-api.vercel.app/auth/login",
-        {
-          email: email,
-          password: password,
-        }
-      );
+      const response = await axios.post(`${URL.USER_URL}auth/login`, {
+        email: email,
+        password: password,
+      });
       // console.log("Login response:", response.data);
       if (response.data.success === true) {
         console.log("Login successful, redirecting to dashboard");
@@ -43,12 +41,9 @@ const Login = () => {
 
   const handleForgotPassword = async () => {
     try {
-      await axios.post(
-        "https://qanda-student-api.vercel.app/auth/forgot-password",
-        {
-          email: email,
-        }
-      );
+      await axios.post(`${URL.USER_URL}auth/forgot-password`, {
+        email: email,
+      });
       alert(
         "To reset your password, an OTP has been sent to your email address."
       );
@@ -61,7 +56,7 @@ const Login = () => {
 
   const handleVerifyOtp = async () => {
     try {
-      await axios.post("https://qanda-student-api.vercel.app/auth/verify-otp", {
+      await axios.post(`${URL.USER_URL}auth/verify-otp`, {
         email: email,
         otp: otp,
       });
@@ -82,13 +77,10 @@ const Login = () => {
 
     try {
       // Make API call to reset password
-      await axios.post(
-        "https://qanda-student-api.vercel.app/auth/reset-password",
-        {
-          email: email,
-          newPassword: newPassword,
-        }
-      );
+      await axios.post(`${URL.USER_URL}auth/reset-password`, {
+        email: email,
+        newPassword: newPassword,
+      });
       alert("Password reset successful!");
       // Redirect user to login page after successful password reset
       navigate("/login");

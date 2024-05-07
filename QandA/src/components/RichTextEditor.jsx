@@ -4,6 +4,7 @@ import Axios from "axios";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import css from "./RichTextEditor.module.css";
+import * as URL from "../hostdetails";
 
 const RichTextEditor = () => {
   const [value, setValue] = useState("");
@@ -17,19 +18,16 @@ const RichTextEditor = () => {
   const handleSubmitClick = async () => {
     try {
       setSubmitting(true);
-      const response = await Axios.post(
-        `https://qanda-student-api.vercel.app/RTEContent`,
-        {
-          question: value,
-          studentId: email,
-          askedBy: name,
-          askedOn: new Date(),
-        }
-      );
+      const response = await Axios.post(`${URL.USER_URL}RTEContent`, {
+        question: value,
+        studentId: email,
+        askedBy: name,
+        askedOn: new Date(),
+      });
 
       const questionId = response.data._id;
 
-      await Axios.post("https://qanda-student-api.vercel.app/askedQuestionId", {
+      await Axios.post(`${URL.USER_URL}askedQuestionId`, {
         questionId: questionId,
         askedQuestionsId: questionId,
         studentId: email,
